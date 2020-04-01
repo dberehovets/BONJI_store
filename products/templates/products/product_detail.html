@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/product.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Home -->
+
+<div class="home">
+  <div class="home_container">
+    <div class="home_background" style="background-image:url({{ product.category.image.url }})"></div>
+    {% if messages %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          {% for message in messages %}
+            <div class="alert alert-{% if message.level == 25 %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{message}}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div class="home_content_container">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="home_content">
+              <div class="home_title">{{product.category.title}}<span>.</span></div>
+              <div class="home_text"><p>{{product.category.description}}</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Product Details -->
+
+<div class="product_details">
+  <div class="container">
+    <div class="row details_row">
+
+      <!-- Product Image -->
+      <div class="col-lg-6">
+        <div class="details_image">
+          <div class="details_image_large"><img src="{{ product.main_image.url }}" alt=""><div class="product_extra product_{{ product.product_extra }}"><a href="categories.html">{{product.product_extra.upper}}</a></div></div>
+          <div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
+            <div class="details_image_thumbnail active" data-image="{{ product.main_image.url }}"><img src="{{ product.main_image.url }}" alt=""></div>
+            {% for product_image in product.images.all %}
+            <div class="details_image_thumbnail" data-image="{{ product_image.image.url }}"><img src="{{ product_image.image.url }}" alt="No image"></div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Content -->
+      <div class="col-lg-6">
+        <div class="details_content">
+          <div class="details_name">{{product.name}}</div>
+          {% if product.old_price %}
+          <div class="details_discount">${{product.old_price}}</div>
+          {% endif %}
+          <div class="details_price">${{product.new_price}}</div>
+
+          <!-- In Stock -->
+          <div class="in_stock_container">
+            <div class="availability">Availability:</div>
+            <span style="color:{% if product.quantity %}#44a038{% else %}#b52f21{% endif %}">{% if product.quantity %}In-Stock{% else %}Non-Available{% endif %}</span>
+          </div>
+          <div class="details_text">
+            <p>{{product.characteristics}}</p>
+          </div>
+
+          <!-- Product Quantity -->
+          <div class="product_quantity_container">
+            <div class="product_quantity clearfix">
+              <span>Qty</span>
+              <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+              <div class="quantity_buttons">
+                <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
+                <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+              </div>
+            </div>
+            {% if product.quantity %}
+            <div class="button cart_button"><a href="{% url 'cart:add_to_cart' product_pk=product.pk qty=1 %}">Add to cart</a></div>
+            {% else %}
+            <div class="button cart_button"><a style="pointer-events: none;" href="{% url 'cart:add_to_cart' product_pk=product.pk qty=1 %}">Add to cart</a></div>
+            {% endif %}
+          </div>
+
+          <!-- Share -->
+          <div class="details_share">
+            <span>Share:</span>
+            <ul>
+              <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row description_row">
+      <div class="col">
+        <div class="description_title_container">
+          <div class="description_title">Description</div>
+          <div class="reviews_title"><a href="#">Reviews <span>(1)</span></a></div>
+        </div>
+        <div class="description_text">
+          <p>{{product.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Products -->
+
+<div class="products">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <div class="products_title">Related Products</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+
+        <div class="product_grid">
+
+          {% for product in related_products %}
+          <!-- Product -->
+          <div class="product">
+            <div class="product_image"><img src="{{product.main_image.url}}" alt=""></div>
+            <div class="product_extra product_{{product.product_extra}}"><a href="#">{{product.product_extra.upper}}</a></div>
+            <div class="product_content">
+              <div class="product_title"><a href="{% url 'products:product_detail' pk=product.pk %}">{{product.name}}</a></div>
+              <div class="product_price">{{product.new_price}}</div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/product.js' %}"></script>
+{% endblock %}

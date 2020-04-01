@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/categories.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/categories_responsive.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Home -->
+
+	<div class="home">
+		<div class="home_container">
+			<div class="home_background" style="background-image:url({{ category.image.url }})"></div>
+			{% if messages %}
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						{% for message in messages %}
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								{{message}}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			<div class="home_content_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="home_content">
+								<div class="home_title">{{ category }}<span>.</span></div>
+								<div class="home_text"><p>{{ category.description }}</p></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Products -->
+
+	<div class="products">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+
+					<!-- Product Sorting -->
+					<div class="sorting_bar d-flex flex-md-row flex-column align-items-md-center justify-content-md-start">
+						<div class="results">Showing <span>12</span> results</div>
+						<div class="sorting_container ml-md-auto">
+							<div class="sorting">
+								<ul class="item_sorting">
+									<li>
+										<span class="sorting_text">Sort by</span>
+										<i class="fa fa-chevron-down" aria-hidden="true"></i>
+										<ul>
+											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span></li>
+											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "price" }'><span>Price</span></li>
+											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "name" }'><span>Name</span></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+
+					<div class="product_grid">
+
+            {% for product in product_list %}
+						<!-- Product -->
+						<div class="product">
+							<div class="product_image"><img src="{{ product.main_image.url}}" alt="No Image"></div>
+              {% if product.product_extra %}
+							<div class="product_extra product_{{product.product_extra}}"><a href="{#}">{{product.product_extra.upper}}</a></div>
+              {% endif %}
+							<div class="product_content">
+								<div class="product_title"><a href="{% url 'products:product_detail' pk=product.pk %}">{{product.name}}</a></div>
+								<div class="product_price">${{product.new_price}}</div>
+							</div>
+						</div>
+            {% endfor %}
+
+					</div>
+
+					<!-- PAGINATION -->
+					<div class="product_pagination">
+						<ul>
+							{% for num in paginator.page_range %}
+								{% if num == 1 %}
+									<li class="active"><a href="?page=1">01.</a></li>
+								{% else %}
+									<li><a href="?page={{num}}">{% if num < 10 %}0{% endif %}{{num}}.</a></li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Icon Boxes -->
+
+	<div class="icon_boxes">
+		<div class="container">
+			<div class="row icon_box_row">
+
+				<!-- Icon Box -->
+				<div class="col-lg-4 icon_box_col">
+					<div class="icon_box">
+						<div class="icon_box_image"><img src="{% static 'images/icon_1.svg' %}" alt=""></div>
+						<div class="icon_box_title">Free Shipping across Ukraine</div>
+						<div class="icon_box_text">
+							<p>Get your products within 2 days. We will deliver each device right at your doorstep or by post.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Icon Box -->
+				<div class="col-lg-4 icon_box_col">
+					<div class="icon_box">
+						<div class="icon_box_image"><img src="{% static 'images/icon_2.svg' %}" alt=""></div>
+						<div class="icon_box_title">Money back within 14 days</div>
+						<div class="icon_box_text">
+							<p>Count on guaranteed satisfaction with the product. Otherwise, we'll return your money.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Icon Box -->
+				<div class="col-lg-4 icon_box_col">
+					<div class="icon_box">
+						<div class="icon_box_image"><img src="{% static 'images/icon_3.svg' %}" alt=""></div>
+						<div class="icon_box_title">24h Fast Support</div>
+						<div class="icon_box_text">
+							<p>If you have any questions regarding the products, feel free to contact our support team anytime.</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/categories.js' %}"></script>
+{% endblock %}

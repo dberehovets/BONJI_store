@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<!-- Home -->
+	<div class="home">
+		<div class="home_slider_container">
+
+			<!-- Home Slider -->
+			<div class="owl-carousel owl-theme home_slider">
+
+				<!-- Slider Item -->
+				<div class="owl-item home_slider_item">
+
+					<div class="home_slider_background" style="background-image:url({% static 'images/home_slider_1.jpg' %})"></div>
+					{% if messages %}
+					<div class="container"">
+						<div class="row">
+							<div class="col">
+								{% for message in messages %}
+									<div class="alert alert-success alert-dismissible fade show" role="alert">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										{{message}}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					<div class="home_slider_content_container">
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<div class="home_slider_content"  data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
+										<div class="home_slider_title">The newest collection of Laptops.</div>
+										<div class="home_slider_subtitle">Just give us a chance to sell you the laptop that will inspire you.</div>
+										{% for link in link_menu %}
+											{% if link.title == 'Laptops' %}
+												<div class="button button_light home_button"><a href="{% url 'products:product_list' category_pk=link.pk %}">Shop Now</a></div>
+											{% endif %}
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- Slider Item -->
+				<div class="owl-item home_slider_item">
+					<div class="home_slider_background" style="background-image:url({% static 'images/home_slider_2.jpg' %})"></div>
+					<div class="home_slider_content_container">
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<div class="home_slider_content"  data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
+										<div class="home_slider_title">Best tablets in 2020.</div>
+										<div class="home_slider_subtitle">Tablets were always going to come in useful; from their large high-resolution displays and buttons, to their grippable form factors, they are only slightly less portable than smartphones yet offer a world more functionality at a tap. Get your own tablet today!</div>
+										{% for link in link_menu %}
+											{% if link.title == 'Tablets' %}
+												<div class="button button_light home_button"><a href="{% url 'products:product_list' category_pk=link.pk %}">Shop Now</a></div>
+											{% endif %}
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Slider Item -->
+				<div class="owl-item home_slider_item">
+					<div class="home_slider_background" style="background-image:url({% static 'images/home_slider_3.jpg' %})"></div>
+					<div class="home_slider_content_container">
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<div class="home_slider_content"  data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
+										<div class="home_slider_title">The top smartphones we've tested.</div>
+										<div class="home_slider_subtitle">Our best phones list has changed dramatically thanks to 2020's newest smartphones.</div>
+										{% for link in link_menu %}
+											{% if link.title == 'Smartphones' %}
+												<div class="button button_light home_button"><a href="{% url 'products:product_list' category_pk=link.pk %}">Shop Now</a></div>
+											{% endif %}
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- Home Slider Dots -->
+
+			<div class="home_slider_dots_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="home_slider_dots">
+								<ul id="home_slider_custom_dots" class="home_slider_custom_dots">
+									<li class="home_slider_custom_dot active">01.</li>
+									<li class="home_slider_custom_dot">02.</li>
+									<li class="home_slider_custom_dot">03.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Ads -->
+
+	<div class="avds">
+		<div class="avds_container d-flex flex-lg-row flex-column align-items-start justify-content-between">
+			<div class="avds_small">
+				<div class="avds_background" style="background-image:url({% static 'images/avds_small.jpg' %})"></div>
+				<div class="avds_small_inner">
+					<div class="avds_discount_container">
+						<img src="{% static 'images/discount.png' %}" alt="">
+						<div>
+							<div class="avds_discount">
+								<div>20<span>%</span></div>
+								<div>Discount</div>
+							</div>
+						</div>
+					</div>
+					<div class="avds_small_content">
+						<div class="avds_title">Smart Phones</div>
+						{% for link in link_menu %}
+							{% if link.title == 'Smartphones' %}
+								<div class="avds_link"><a href="{% url 'products:product_list' category_pk=link.pk %}">See More</a></div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="avds_large">
+				<div class="avds_background" style="background-image:url({% static 'images/avds_large.jpg' %})"></div>
+				<div class="avds_large_container">
+					<div class="avds_large_content">
+						<div class="avds_title">Professional Cameras</div>
+						<div class="avds_text">Last year was something of a vintage year for new cameras, so could 2020 possibly match it? The latest camera rumors suggest there's a good chance it will, with a range of new models expected from Canon, Nikon, Sony, Fujifilm, Panasonic and Olympus.</div>
+						{% for link in link_menu %}
+							{% if link.title == 'Cameras' %}
+								<div class="avds_link avds_link_large"><a href="{% url 'products:product_list' category_pk=link.pk %}">See More</a></div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Products -->
+
+	<div class="products">
+		<div class="container" style="align_items: baseline;">
+			<div class="row">
+				<div class="col">
+
+					<div class="product_grid">
+
+						{% for product in products %}
+						<!-- Product -->
+						<div class="product">
+							<div class="product_image"><img src="{{ product.main_image.url }}" alt="No Image"></div>
+							{% if product.product_extra %}
+							<div class="product_extra product_{{product.product_extra}}"><a href="{#}">{{product.product_extra.upper}}</a></div>
+							{% endif %}
+							<div class="product_content">
+								<div class="product_title"><a href="{% url 'products:product_detail' pk=product.pk %}">{{product.name}}</a></div>
+								<div class="product_price">${{product.new_price}}</div>
+							</div>
+						</div>
+						{% endfor %}
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Ad -->
+
+	<div class="avds_xl">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="avds_xl_container clearfix">
+						<div class="avds_xl_background" style="background-image:url({% static 'images/avds_xl.jpg' %})"></div>
+						<div class="avds_xl_content">
+							<div class="avds_title">Amazing Accessories</div>
+							<div class="avds_text">From cases to chargers, bands. Accessories that can supplement your Device and make it uniquely yours!</div>
+							<div class="avds_link avds_xl_link"><a href="{% url 'products:product_list' category_pk=accessories_pk%}">See More</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Icon Boxes -->
+
+	<div class="icon_boxes">
+		<div class="container">
+			<div class="row icon_box_row">
+
+				<!-- Icon Box -->
+				<div class="col-lg-4 icon_box_col">
+					<div class="icon_box">
+						<div class="icon_box_image"><img src="{% static 'images/icon_1.svg' %}" alt=""></div>
+						<div class="icon_box_title">Free Shipping across Ukraine</div>
+						<div class="icon_box_text">
+							<p>Get your products within 2 days. We will deliver each device right at your doorstep or by post.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Icon Box -->
+				<div class="col-lg-4 icon_box_col">
+					<div class="icon_box">
+						<div class="icon_box_image"><img src="{% static 'images/icon_2.svg' %}" alt=""></div>
+						<div class="icon_box_title">Money back within 14 days</div>
+						<div class="icon_box_text">
+							<p>Count on guaranteed satisfaction with the product. Otherwise, we'll return your money.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Icon Box -->
+				<div class="col-lg-4 icon_box_col">
+					<div class="icon_box">
+						<div class="icon_box_image"><img src="{% static 'images/icon_3.svg' %}" alt=""></div>
+						<div class="icon_box_title">24h Fast Support</div>
+						<div class="icon_box_text">
+							<p>If you have any questions regarding the products, feel free to contact our support team anytime.</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

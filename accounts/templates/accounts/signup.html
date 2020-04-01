@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/contact.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/contact_responsive.css' %}">
+{% endblock %}
+
+{% block content %}
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_container">
+			<div class="home_background" style="background-image:url({% static 'images/contact.jpg' %})"></div>
+			{% if messages %}
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						{% for message in messages %}
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								{{message}}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			<div class="home_content_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="home_content">
+								<div class="breadcrumbs">
+									<ul>
+										<li><a href="{% url 'home' %}">Home</a></li>
+										<li>Registration</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Contact -->
+
+	<div class="contact">
+		<div class="container">
+			<div class="row">
+
+				<!-- Get in touch -->
+				<div class="col-lg-8 contact_col">
+					<div class="get_in_touch">
+						<div class="section_title">Registration</div>
+						<div class="section_subtitle">Please fill out the fields below.</div>
+						<div class="contact_form_container">
+							<form id="contact_form" class="contact_form" method="post">
+								{% csrf_token %}
+                <div class="row">
+                  <div class="col-xl-6" style="color:red;">{{ form.non_field_errors }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6" style="color:red;">{{ form.first_name.errors }}</div><div class="col-xl-6" style="color:red;">{{ form.last_name.errors }}</div>
+                </div>
+								<div class="row">
+                  <div class="col-xl-6">
+										<!-- First Name -->
+										<label for="{{ form.first_name.id_for_label }}">First Name*</label>
+										{{form.first_name|add_class:"contact_input"}}
+									</div>
+									<div class="col-xl-6 last_name_col">
+										<!-- Last Name -->
+										<label for="{{ form.last_name.id_for_label }}">Last Name*</label>
+										{{form.last_name|add_class:"contact_input"}}
+									</div>
+								</div>
+                <div class="row">
+                  <div class="col-xl-6" style="color:red;">{{ form.username.errors }}</div><div class="col-xl-6" style="color:red;">{{ form.email.errors }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6">
+                    <!-- UserName -->
+                    <label for="{{ form.username.id_for_label }}">User Name*</label>
+                    {{form.username|add_class:"contact_input"}}
+                  </div>
+                  <div class="col-xl-6 last_name_col">
+                    <!-- Email -->
+                    <label for="{{ form.email.id_for_label }}">Email*</label>
+                    {{form.email|add_class:"contact_input"}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6" style="color:red;">{{ form.password1.errors }}</div><div class="col-xl-6" style="color:red;">{{ form.password2.errors }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6">
+                    <!-- Password1 -->
+                    <label for="{{ form.password1.id_for_label }}">Password*</label>
+                    {{form.password1|add_class:"contact_input"}}
+                  </div>
+                  <div class="col-xl-6 last_name_col">
+                    <!-- Password2 -->
+                    <label for="{{ form.password2.id_for_label }}">Confirm Password*</label>
+                    {{form.password2|add_class:"contact_input"}}
+                  </div>
+                </div>
+								<button type="submit" class="button contact_button"><span>Register</span></button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+{% block subscribe %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/contact.js' %}"></script>
+{% endblock %}
