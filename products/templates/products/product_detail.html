@@ -52,13 +52,15 @@
         <div class="details_image">
           <div class="details_image_large">
             <img src="{{ product.main_image.url }}" alt="">
-            <form id="extra_{{product.pk}}" action="{% url 'search_list' %}" method="post">
-              {% csrf_token %}
-                <div class="product_extra product_{{product.product_extra}}">
-                  <a onclick="document.getElementById('extra_{{product.pk}}').submit();">{{product.product_extra.upper}}</a>
-                  <input type="text" name="request" value={{product.product_extra}} hidden>
-                </div>
-            </form>
+            {% if product.product_extra %}
+              <form id="extra_{{product.pk}}" action="{% url 'search_list' %}" method="post">
+                {% csrf_token %}
+                  <div class="product_extra product_{{product.product_extra}}">
+                    <a onclick="document.getElementById('extra_{{product.pk}}').submit();">{{product.product_extra.upper}}</a>
+                    <input type="text" name="request" value={{product.product_extra}} hidden>
+                  </div>
+              </form>
+            {% endif %}
           </div>
           <div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
             <div class="details_image_thumbnail active" data-image="{{ product.main_image.url }}"><img src="{{ product.main_image.url }}" alt=""></div>
