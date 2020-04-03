@@ -1048,14 +1048,17 @@ section
 	transform-origin: top left;
 	transform: rotate(90deg);
 }
-.product_extra a
+.product_extra a:not([href]):not([tabindex])
 {
 	display: block;
 	font-size: 16px;
 	font-weight: 500;
 	color: #FFFFFF;
 	line-height: 36px;
+  text-decoration: none;
+	cursor: pointer;
 }
+
 .product_new
 {
 	background: #6c6a74;

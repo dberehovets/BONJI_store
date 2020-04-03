@@ -170,7 +170,13 @@
 						<div class="product">
 							<div class="product_image"><img src="{{ product.main_image.url }}" alt="No Image"></div>
 							{% if product.product_extra %}
-							<div class="product_extra product_{{product.product_extra}}"><a href="{#}">{{product.product_extra.upper}}</a></div>
+							<form id="extra_{{product.pk}}" action="{% url 'search_list' %}" method="post">
+								{% csrf_token %}
+									<div class="product_extra product_{{product.product_extra}}">
+										<a onclick="document.getElementById('extra_{{product.pk}}').submit();">{{product.product_extra.upper}}</a>
+										<input type="text" name="request" value={{product.product_extra}} hidden>
+									</div>
+							</form>
 							{% endif %}
 							<div class="product_content">
 								<div class="product_title"><a href="{% url 'products:product_detail' pk=product.pk %}">{{product.name}}</a></div>

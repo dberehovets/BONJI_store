@@ -62,18 +62,22 @@
 							<form id="contact_form" class="contact_form" method="post">
 								{% csrf_token %}
 								<div class="row">
-									<div class="col-xl-6">
-										<!-- Name -->
-										<label for="{{ form.username.id_for_label }}">User Name*</label>
-										{{form.username|add_class:"contact_input"}}
-                    <a href="{% url 'accounts:signup' %}">Please click here to register!</a>
+									<div class="col-xl-6" style="color:red;">{{ form.non_field_errors }}</div>
+								</div>
+								<div class="row">
+										<div class="col-xl-6">
+											<!-- Name -->
+											<label for="{{ form.username.id_for_label }}">User Name*</label>
+											{{form.username|add_class:"contact_input"}}
+										</div>
 									</div>
-									<div class="col-xl-6 last_name_col">
-										<!-- Password -->
-										<label for="{{ form.password.id_for_label }}">Password*</label>
-										{{form.password|add_class:"contact_input"}}
-									</div>
-
+									<div class="row">
+										<div class="col-xl-6 last_name_col">
+											<!-- Password -->
+											<label for="{{ form.password.id_for_label }}">Password*</label>
+											{{form.password|add_class:"contact_input"}}
+											<a href="{% url 'accounts:signup' %}">Please click here to register!</a>
+										</div>
 								</div>
 								<button type="submit" class="button contact_button"><span>Log In</span></button>
 							</form>

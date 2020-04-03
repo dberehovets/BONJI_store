@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 import random
 
 from products.models import Product
@@ -15,10 +15,18 @@ class ProductDetail(DetailView):
     model = Product
 
     def post(self, request, *args, **kwargs):
-        form = SubscriberForm(request.POST)
-        if form.is_valid():
-            Subscriber.objects.get_or_create(**form.cleaned_data)
-        messages.add_message(request, messages.SUCCESS, "You are subscribed!", fail_silently=True)
+        email = request.POST.get('email')
+        qty = request.POST.get('qty')
+
+        if email:
+            form = SubscriberForm(request.POST)
+            if form.is_valid():
+                Subscriber.objects.get_or_create(**form.cleaned_data)
+            messages.add_message(request, messages.SUCCESS, "You are subscribed!", fail_silently=True)
+        elif int(qty) > 0:
+            return redirect('cart:add_to_cart', product_pk=self.get_object().pk, qty=qty)
+        elif qty == "0":
+            messages.add_message(request, messages.WARNING, "Change product quantity!", fail_silently=True)
         return redirect('products:product_detail', pk=self.get_object().pk)
 
     def get_context_data(self, **kwargs):

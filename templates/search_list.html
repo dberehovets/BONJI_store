@@ -8,40 +8,6 @@
 
 {% block content %}
 
-<!-- Home -->
-
-	<div class="home">
-		<div class="home_container">
-			<div class="home_background" style="background-image:url({{ category.image.url }})"></div>
-			{% if messages %}
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						{% for message in messages %}
-							<div class="alert alert-success alert-dismissible fade show" role="alert">
-								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-								{{message}}
-							</div>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
-			{% endif %}
-			<div class="home_content_container">
-				<div class="container">
-					<div class="row">
-						<div class="col">
-							<div class="home_content">
-								<div class="home_title">{{ category }}<span>.</span></div>
-								<div class="home_text"><p>{{ category.description }}</p></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- Products -->
 
 	<div class="products">
@@ -80,13 +46,7 @@
 						<div class="product">
 							<div class="product_image"><img src="{{ product.main_image.url}}" alt="No Image"></div>
               {% if product.product_extra %}
-							<form id="extra_{{product.pk}}" action="{% url 'search_list' %}" method="post">
-								{% csrf_token %}
-									<div class="product_extra product_{{product.product_extra}}">
-										<a onclick="document.getElementById('extra_{{product.pk}}').submit();">{{product.product_extra.upper}}</a>
-										<input type="text" name="request" value={{product.product_extra}} hidden>
-									</div>
-							</form>
+							<div class="product_extra product_{{product.product_extra}}"><a>{{product.product_extra.upper}}</a></div>
               {% endif %}
 							<div class="product_content">
 								<div class="product_title"><a href="{% url 'products:product_detail' pk=product.pk %}">{{product.name}}</a></div>
@@ -157,6 +117,8 @@
 			</div>
 		</div>
 	</div>
+{% endblock %}
+{% block subscribe %}
 {% endblock %}
 {% block scripts %}
 <script src="{% static 'js/categories.js' %}"></script>

@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/contact.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/contact_responsive.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Home -->
+
+<div class="home">
+  <div class="home_container">
+    <div class="home_background" style="background-image:url({% static 'images/cart.jpg' %})"></div>
+    <div class="home_content_container">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="home_content">
+              <div class="breadcrumbs">
+                <ul>
+                  <li><a href="{% url 'home' %}">Home</a></li>
+                  <li>Shopping Cart</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact -->
+
+<div class="contact">
+  <div class="container">
+    <div class="row">
+
+      <!-- Get in touch -->
+      <div class="col-lg-8 container">
+        <div class="get_in_touch">
+          <div class="section_title">CheckOut</div>
+          <div class="section_subtitle">Please enter shipping information below.</div>
+          <div class="contact_form_container">
+            <form id="contact_form" class="contact_form" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-xl-6" style="color:red;">{{ form.non_field_errors }}</div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6" style="color:red;">{{ form.first_name.errors }}</div><div class="col-xl-6" style="color:red;">{{ form.last_name.errors }}</div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6">
+                  <!-- First Name -->
+                  <label for="{{ form.first_name.id_for_label }}">First Name of Recipient*</label>
+                  {{form.first_name|add_class:"contact_input"}}
+                </div>
+                <div class="col-xl-6 last_name_col">
+                  <!-- Last Name -->
+                  <label for="{{ form.last_name.id_for_label }}">Last Name of Recipient*</label>
+                  {{form.last_name|add_class:"contact_input"}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6" style="color:red;">{{ form.username.errors }}</div><div class="col-xl-6" style="color:red;">{{ form.phone_number.errors }}</div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6">
+                  <!-- UserName -->
+                  <label for="{{ form.phone_number.id_for_label }}">Phone Number*</label>
+                  {{form.phone_number|add_class:"contact_input"}}
+                </div>
+                <div class="col-xl-6 last_name_col">
+                  <!-- Email -->
+                  <label for="{{ form.email.id_for_label }}">Email*</label>
+                  {{form.email|add_class:"contact_input"}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6" style="color:red;">{{ form.shipping_address.errors }}</div><div class="col-xl-6" style="color:red;">{{ form.payment_method.errors }}</div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6">
+                  <!-- Password1 -->
+                  <label for="{{ form.shipping_address.id_for_label }}">Shipping Address*</label>
+                  {{form.shipping_address|add_class:"contact_input"}}
+                </div>
+                <div class="col-xl-6 last_name_col">
+                  <!-- Password2 -->
+                  <label for="{{ form.payment_method.id_for_label }}">Payment Method*</label>
+                  {{form.payment_method|add_class:"contact_input"}}
+                </div>
+              </div>
+              <button type="submit" class="button contact_button"><span>Confirm Order</span></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block subscribe %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock %}

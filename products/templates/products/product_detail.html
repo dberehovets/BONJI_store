@@ -50,7 +50,16 @@
       <!-- Product Image -->
       <div class="col-lg-6">
         <div class="details_image">
-          <div class="details_image_large"><img src="{{ product.main_image.url }}" alt=""><div class="product_extra product_{{ product.product_extra }}"><a href="categories.html">{{product.product_extra.upper}}</a></div></div>
+          <div class="details_image_large">
+            <img src="{{ product.main_image.url }}" alt="">
+            <form id="extra_{{product.pk}}" action="{% url 'search_list' %}" method="post">
+              {% csrf_token %}
+                <div class="product_extra product_{{product.product_extra}}">
+                  <a onclick="document.getElementById('extra_{{product.pk}}').submit();">{{product.product_extra.upper}}</a>
+                  <input type="text" name="request" value={{product.product_extra}} hidden>
+                </div>
+            </form>
+          </div>
           <div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
             <div class="details_image_thumbnail active" data-image="{{ product.main_image.url }}"><img src="{{ product.main_image.url }}" alt=""></div>
             {% for product_image in product.images.all %}
@@ -80,19 +89,23 @@
 
           <!-- Product Quantity -->
           <div class="product_quantity_container">
-            <div class="product_quantity clearfix">
-              <span>Qty</span>
-              <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-              <div class="quantity_buttons">
-                <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
-                <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+            <form action="" id="quantity_form" method="post">
+              {% csrf_token %}
+              <div class="product_quantity clearfix">
+                <span>Qty</span>
+
+                <input id="quantity_input" type="text" pattern="[0-9]*" value="1" name='qty'>
+                <div class="quantity_buttons">
+                  <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
+                  <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+                </div>
               </div>
-            </div>
-            {% if product.quantity %}
-            <div class="button cart_button"><a href="{% url 'cart:add_to_cart' product_pk=product.pk qty=1 %}">Add to cart</a></div>
-            {% else %}
-            <div class="button cart_button"><a style="pointer-events: none;" href="{% url 'cart:add_to_cart' product_pk=product.pk qty=1 %}">Add to cart</a></div>
-            {% endif %}
+              {% if product.quantity %}
+              <input type="submit" class="button cart_button trans_200" value="Add to cart">
+              {% else %}
+              <input type="submit" class="button cart_button trans_200" value="Add to cart" disabled>
+              {% endif %}
+            </form>
           </div>
 
           <!-- Share -->

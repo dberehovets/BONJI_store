@@ -24,7 +24,8 @@ urlpatterns = [
     path('', views.HomePage.as_view(), name='home'),
     path('contact/', views.ContactPage.as_view(), name='contact'),
     path('products/', include('products.urls', namespace='products')),
-    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('search/', views.search, name='search_list'),
     path('cart/', include('cart.urls', namespace='cart')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('django.contrib.auth.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

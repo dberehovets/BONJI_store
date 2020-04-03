@@ -1106,11 +1106,16 @@ section
 	display: inline-block;
 	vertical-align: middle;
 	margin-left: 13px;
+	font-size: 16px;
+	font-weight: 600;
 }
-.cart_button::after
+
+.cart_button:hover
 {
+	color: #FFFFFF;
 	background: #1b1b1b;
 }
+
 .details_share
 {
 	margin-top: 51px;
@@ -1268,13 +1273,14 @@ section
 	transform-origin: top left;
 	transform: rotate(90deg);
 }
-.product_extra a
+.product_extra a:not([href]):not([tabindex])
 {
 	display: block;
 	font-size: 16px;
 	font-weight: 500;
 	color: #FFFFFF;
 	line-height: 36px;
+	cursor: pointer;
 }
 .product_new
 {

@@ -45,8 +45,6 @@ $(document).ready(function()
 	initMenu();
 	initIsotope();
 
-	changePadding();
-
 	/*
 
 	2. Set Header

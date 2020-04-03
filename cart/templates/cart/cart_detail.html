@@ -12,6 +12,20 @@
 <div class="home">
   <div class="home_container">
     <div class="home_background" style="background-image:url({% static 'images/cart.jpg' %})"></div>
+    {% if messages %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          {% for message in messages %}
+            <div class="alert alert-{% if message.level == 25 %}success collapse{% else %}danger fade show{% endif %} alert-dismissible" role="alert">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{message}}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
     <div class="home_content_container">
       <div class="container">
         <div class="row">
@@ -49,48 +63,53 @@
     <div class="row cart_items_row">
       <div class="col">
 
-        {% for item in cart.items.all %}
-        <!-- Cart Item -->
-        <div class="cart_item d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
-          <!-- Name -->
-          <div class="cart_item_product d-flex flex-row align-items-center justify-content-start">
-            <div class="cart_item_image">
-              <div><img src="{{ item.product.main_image.url }}" alt="No image"></div>
+        {% if cart.items.exists %}
+          {% for item in cart.items.all %}
+          <!-- Cart Item -->
+          <div class="cart_item d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
+            <!-- Name -->
+            <div class="cart_item_product d-flex flex-row align-items-center justify-content-start">
+              <div class="cart_item_image">
+                <div><img src="{{ item.product.main_image.url }}" alt="No image"></div>
+              </div>
+              <div class="cart_item_name_container">
+                <div class="cart_item_name"><a href="{% url 'products:product_detail' pk=item.product.pk %}">{{item.product.name}}</a></div>
+                <div class="cart_item_edit"><a href="{% url 'cart:remove_from_cart' item_pk=item.pk qty=item.quantity %}">Remove from cart</a></div>
+              </div>
             </div>
-            <div class="cart_item_name_container">
-              <div class="cart_item_name"><a href="{% url 'products:product_detail' pk=item.product.pk %}">{{item.product.name}}</a></div>
-              <div class="cart_item_edit"><a href="{% url 'cart:remove_from_cart' item_pk=item.pk %}">Remove from cart</a></div>
-            </div>
-          </div>
-          <!-- Price -->
-          <div class="cart_item_price">${{item.product.new_price}}</div>
-          <!-- Quantity -->
-          <div class="cart_item_quantity">
-            <div class="product_quantity_container">
-              <div class="product_quantity clearfix">
-                <span>Qty</span>
-                <input id="quantity_input" type="text" pattern="[0-9]*" value="{{ item.quantity }}">
-                <div class="quantity_buttons">
-                  <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
-                  <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+            <!-- Price -->
+            <div class="cart_item_price">${{item.product.new_price}}</div>
+            <!-- Quantity -->
+            <div class="cart_item_quantity">
+              <div class="product_quantity_container">
+                <div class="product_quantity clearfix">
+                  <span>Qty</span>
+                  <input class="quantity_input" type="text" pattern="[0-9]*" value="{{ item.quantity }}">
+                  <div class="quantity_buttons">
+                    <a href="{% url 'cart:add_to_cart' product_pk=item.product.pk qty=1 %}" ><div class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div></a>
+                    <a href="{% url 'cart:remove_from_cart' item_pk=item.pk qty=1 %}" ><div class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div></a>
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- Total -->
+            <div class="cart_item_total">${{ item.total_price }}</div>
           </div>
-          <!-- Total -->
-          <div class="cart_item_total">${{ item.product.price*item.quantity }}</div>
-        </div>
-        {% endfor %}
-
+          {% endfor %}
+        {% else %}
+        <br>
+        <div class="section_title">Cart is empty! Change it quickly!</div>
+        {% endif %}
       </div>
     </div>
     <div class="row row_cart_buttons">
       <div class="col">
         <div class="cart_buttons d-flex flex-lg-row flex-column align-items-start justify-content-start">
-          <div class="button continue_shopping_button"><a href="#">Continue shopping</a></div>
+          <div class="button continue_shopping_button"><a href="{% url 'home' %}">Continue shopping</a></div>
           <div class="cart_buttons_right ml-lg-auto">
-            <div class="button clear_cart_button"><a href="#">Clear cart</a></div>
-            <div class="button update_cart_button"><a href="#">Update cart</a></div>
+
+            <div class="button clear_cart_button"><a {% if not cart.items.exists %}style="pointer-events: none;"{% endif %} href="{% url 'cart:clear_cart' pk=cart.pk %}">Clear cart</a></div>
+
           </div>
         </div>
       </div>
@@ -105,24 +124,24 @@
           <div class="delivery_options">
             <label class="delivery_option clearfix">Next day delivery
               <input type="radio" name="radio">
-              <span class="checkmark"></span>
+              <span class="checkmark", id="fast_delivery"></span>
               <span class="delivery_price">$4.99</span>
             </label>
             <label class="delivery_option clearfix">Standard delivery
               <input type="radio" name="radio">
-              <span class="checkmark"></span>
-              <span class="delivery_price">$1.99</span>
+              <span class="checkmark", id="common_delivery"></span>
+              <span class="delivery_price" id="common_delivery_price">$1.99</span>
             </label>
             <label class="delivery_option clearfix">Personal pickup
               <input type="radio" checked="checked" name="radio">
-              <span class="checkmark"></span>
-              <span class="delivery_price">Free</span>
+              <span class="checkmark" id="free_delivery"></span>
+              <span class="delivery_price">$0</span>
             </label>
           </div>
         </div>
 
         <!-- Coupon Code -->
-        <div class="coupon">
+        <!-- <div class="coupon">
           <div class="section_title">Coupon code</div>
           <div class="section_subtitle">Enter your coupon code</div>
           <div class="coupon_form_container">
@@ -131,7 +150,7 @@
               <button class="button coupon_button"><span>Apply</span></button>
             </form>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="col-lg-6 offset-lg-2">
@@ -142,19 +161,19 @@
             <ul>
               <li class="d-flex flex-row align-items-center justify-content-start">
                 <div class="cart_total_title">Subtotal</div>
-                <div class="cart_total_value ml-auto">$790.90</div>
+                <div class="cart_total_value ml-auto" id="subtotal_price">${{ cart.total_price }}</div>
               </li>
               <li class="d-flex flex-row align-items-center justify-content-start">
                 <div class="cart_total_title">Shipping</div>
-                <div class="cart_total_value ml-auto">Free</div>
+                <div class="cart_total_value ml-auto" id="shipping_price">$0</div>
               </li>
               <li class="d-flex flex-row align-items-center justify-content-start">
                 <div class="cart_total_title">Total</div>
-                <div class="cart_total_value ml-auto">$790.90</div>
+                <div class="cart_total_value ml-auto" id="total_price">${{ cart.total_price }}</div>
               </li>
             </ul>
           </div>
-          <div class="button checkout_button"><a href="#">Proceed to checkout</a></div>
+          <div class="button checkout_button"><a {% if not cart.items.exists %}style="pointer-events: none;"{% endif %} href="{% url 'cart:checkout' pk=cart.pk %}">Proceed to checkout</a></div>
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ $(document).ready(function()
 {
 	"use strict";
 
-	/* 
+	/*
 
 	1. Vars and Inits
 
@@ -42,8 +42,9 @@ $(document).ready(function()
 	initSearch();
 	initMenu();
 	initQuantity();
+	initDelivery();
 
-	/* 
+	/*
 
 	2. Set Header
 
@@ -61,7 +62,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	3. Init Search
 
@@ -81,7 +82,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	4. Init Menu
 
@@ -100,7 +101,7 @@ $(document).ready(function()
 				if(!menuActive)
 				{
 					openMenu();
-					
+
 					$(document).one('click', function cls(e)
 					{
 						if($(e.target).hasClass('menu_mm'))
@@ -173,7 +174,7 @@ $(document).ready(function()
 		menuActive = false;
 	}
 
-	/* 
+	/*
 
 	5. Init Quantity
 
@@ -184,30 +185,65 @@ $(document).ready(function()
 		// Handle product quantity input
 		if($('.product_quantity').length)
 		{
-			var input = $('#quantity_input');
-			var incButton = $('#quantity_inc_button');
-			var decButton = $('#quantity_dec_button');
+			var inputs = $('.quantity_input');
+			var incButtons = $('.quantity_inc.quantity_control');
+			var decButtons = $('.quantity_dec.quantity_control');
 
 			var originalVal;
 			var endVal;
 
-			incButton.on('click', function()
-			{
-				originalVal = input.val();
-				endVal = parseFloat(originalVal) + 1;
-				input.val(endVal);
-			});
-
-			decButton.on('click', function()
-			{
-				originalVal = input.val();
-				if(originalVal > 0)
+			for (var i = 0; i < inputs.length; i++) {
+				incButtons[i].addEventListener('click', function()
 				{
-					endVal = parseFloat(originalVal) - 1;
-					input.val(endVal);
-				}
-			});
+					originalVal = inputs[incButtons.index(this)].value;
+					endVal = parseFloat(originalVal) + 1;
+					inputs[incButtons.index(this)].value = endVal;
+				});
+
+				decButtons[i].addEventListener('click', function()
+				{
+					originalVal = inputs[decButtons.index(this)].value;
+					if(originalVal > 0)
+					{
+						endVal = parseFloat(originalVal) - 1;
+						inputs[decButtons.index(this)].value = endVal;
+					}
+				});
+			}
+
 		}
+	}
+
+	function initDelivery()
+	{
+		var fast_del = $("#fast_delivery")
+		var common_del = $("#common_delivery")
+		var free_del = $("#free_delivery")
+		var shipping_price = $("#shipping_price")
+
+		var subtotal_price = parseFloat($("#subtotal_price").text().replace("$", ""))
+
+		if (subtotal_price > 100) {
+			$("#common_delivery_price").text("$0")
+		}
+
+		var common_del_price = parseFloat($("#common_delivery_price").text().replace("$", ""))
+		var total_price = $("#total_price")
+
+
+
+		fast_del.on('click', function(){
+			total_price.text("$" + (subtotal_price + 4.99))
+			shipping_price.text("$" + 4.99)
+		})
+		common_del.on('click', function(){
+			total_price.text("$" + (subtotal_price + common_del_price))
+			shipping_price.text("$" + common_del_price)
+		})
+		free_del.on('click', function(){
+			total_price.text("$" + subtotal_price)
+			shipping_price.text("$0")
+		})
 	}
 
 });

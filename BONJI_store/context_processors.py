@@ -14,11 +14,11 @@ def category_menu(request):
     offers_pk = Category.objects.get(title="Offers").pk
     accessories_pk = Category.objects.get(title="Accessories").pk
 
-    try:
-        cart = Cart.objects.get(user=request.user)
+    if request.user.is_authenticated:
+        cart, created = Cart.objects.get_or_create(user=request.user, ordered=False)
         cart_qty = cart.items.count()
         cart_pk = cart.pk
-    except:
+    else:
         cart_qty = 0
         cart_pk = None
 
