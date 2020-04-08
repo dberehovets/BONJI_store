@@ -116,6 +116,3 @@ def phone_not_confirmed(call):
     phone_button = types.KeyboardButton("Share phone number", request_contact=True)
     kb.add(phone_button)
     bot.send_message(call.from_user.id, "Please share your phone number so we could contact you.", reply_markup=kb)
-
-
-bot.polling()
