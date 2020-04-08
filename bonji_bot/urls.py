@@ -6,6 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 app_name = "bonji_bot"
 
 urlpatterns = [
-    path(f"/{settings.TOKEN}", csrf_exempt(UpdateBot.as_view()), name='update'),
+    path(f"{settings.TOKEN}/", csrf_exempt(UpdateBot.as_view()), name='update'),
     path("", csrf_exempt(Check.as_view()), name='check'),
 ]
