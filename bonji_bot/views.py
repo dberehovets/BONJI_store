@@ -8,8 +8,10 @@ bot = TGBot(TOKEN)
 
 
 class BotView(APIView):
-    def post(self, request):
-        # Here should go messages from telegram and then be processed by bot
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("Bot works!")
+
+    def post(self, request, *args, **kwargs):
         json_str = request.body.decode('UTF-8')
         update = types.Update.de_json(json_str)
         bot.process_new_updates([update])
