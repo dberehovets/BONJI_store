@@ -3,6 +3,7 @@ from telebot import logger
 from rest_framework.response import Response
 from django.http import HttpResponse
 from django.views import View
+from rest_framework.views import APIView
 from BONJI_store.settings import TOKEN
 from bonji_bot.models import TelegramCustomer, TelegramCart
 import logging
@@ -20,7 +21,7 @@ class Check(View):
         return HttpResponse("Bot works!")
 
 
-class UpdateBot(View):
+class UpdateBot(APIView):
     def post(self, request, *args, **kwargs):
         global update_id
         json_str = request.body.decode('UTF-8')
