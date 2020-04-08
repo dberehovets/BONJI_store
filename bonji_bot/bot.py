@@ -53,9 +53,9 @@ class TGBot(TeleBot):
         if product is already in the cart, add 1 to it's quantity. Else create
         cartItem and add it to the cart """
 
-        product = get_object_or_404(Product, pk=product_id)
+        product = Product.objects.get(pk=product_id)
         if product.quantity >= 1:
-            user = get_object_or_404(TelegramCustomer, telegram_id=call.from_user.id)
+            user = TelegramCustomer.objects.get(telegram_id=call.from_user.id)
             cart, cr = TelegramCart.objects.get_or_create(user=user, ordered=False)
             cart_item, created = TelegramCartItem.objects.get_or_create(product=product, cart=cart)
             if not created:
