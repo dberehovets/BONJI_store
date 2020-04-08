@@ -23,7 +23,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = '9j)s3o5=yvtr@&rtpthn7=#0%kzxfv@tf%!%gld0ljij_of5(h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['dberehovets.pythonanywhere.com',]
 

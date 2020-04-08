@@ -13,7 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 class ProductImageAdmin(admin.ModelAdmin):
 
-    search_fields = ['name']
+    search_fields = ['image']
 
     list_display = ['__str__', 'product', 'image']
 
