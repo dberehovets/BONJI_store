@@ -2,7 +2,7 @@ from bonji_bot.bot import TGBot, types
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from BONJI_store.settings import TOKEN
-from bonji_bot.models import TelegramCustomer, TelegramCart, TelegramCartItem
+from bonji_bot.models import TelegramCustomer, TelegramCart
 
 bot = TGBot(TOKEN)
 
@@ -62,7 +62,7 @@ def add_to_cart(call):
 
 # Checking if user clicked "Delete from cart". Removing item the cart.
 @bot.callback_query_handler(func=lambda call: True if "delete" in call.data else False)
-def add_to_cart(call):
+def remove_from_cart(call):
     item_id = call.data.split("_")[1]
     bot.remove_from_cart(call, item_id)
 
