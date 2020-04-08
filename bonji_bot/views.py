@@ -1,13 +1,14 @@
 from bonji_bot.bot import TGBot, types
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.http import HttpResponse
+from django.views import View
 from BONJI_store.settings import TOKEN
 from bonji_bot.models import TelegramCustomer, TelegramCart
 
 bot = TGBot(TOKEN)
 
 
-class BotView(APIView):
+class BotView(View):
     def get(self, request, *args, **kwargs):
         return HttpResponse("Bot works!")
 
