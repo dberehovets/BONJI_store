@@ -25,7 +25,7 @@ SECRET_KEY = '9j)s3o5=yvtr@&rtpthn7=#0%kzxfv@tf%!%gld0ljij_of5(h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dberehovets.pythonanywhere.com',]
+ALLOWED_HOSTS = ['dberehovets.pythonanywhere.com', '127.0.0.1',]
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'products',
     'accounts',
     'cart',
+    'bonji_bot',
     'django_cleanup',
 ]
 
@@ -138,3 +139,6 @@ LOGOUT_REDIRECT_URL = '/'
 # EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'dberehovets@gmail.com'
 # EMAIL_HOST_PASSWORD = '******'
+
+
+TOKEN = "1216777021:AAHf24kD4KC5BcGL5jFyycEWt1BHrzjuFUA"
