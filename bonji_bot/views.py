@@ -1,23 +1,35 @@
 from bonji_bot.bot import TGBot, types
+from telebot import logger
 from rest_framework.response import Response
 from django.http import HttpResponse
 from django.views import View
 from BONJI_store.settings import TOKEN
 from bonji_bot.models import TelegramCustomer, TelegramCart
+import logging
+
+logger.setLevel(logging.DEBUG)
 
 bot = TGBot(TOKEN)
 
+__author__ = '@dberehovets'
 
-class BotView(View):
+update_id = None
+
+class Check(View):
     def get(self, request, *args, **kwargs):
         return HttpResponse("Bot works!")
 
+
+class UpdateBot(View):
     def post(self, request, *args, **kwargs):
+        global update_id
         json_str = request.body.decode('UTF-8')
         update = types.Update.de_json(json_str)
-        bot.process_new_updates([update])
+        if update_id != update.update_id:
+            bot.process_new_updates([update])
+            update_id = update.update_id
 
-        return Response({'code': 200})
+        return Response(b'{"ok":true,"result":[]}')
 
 
 ### Checking if user started conversation. Showing Keyboard.
