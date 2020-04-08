@@ -10,7 +10,7 @@ import logging
 
 logger.setLevel(logging.DEBUG)
 
-bot = TGBot(TOKEN)
+bot = TGBot(TOKEN, threaded=False)
 
 __author__ = '@dberehovets'
 
@@ -23,12 +23,11 @@ class Check(View):
 
 class UpdateBot(APIView):
     def post(self, request, *args, **kwargs):
-        global update_id
         json_str = request.body.decode('UTF-8')
         update = types.Update.de_json(json_str)
         bot.process_new_updates([update])
-        
-        return Response(b'{"ok":true,"result":[]}')
+
+        return ""
 
 
 ### Checking if user started conversation. Showing Keyboard.
