@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from categories.models import Category
 from products.models import Product
 from bonji_bot.models import TelegramCart, TelegramCartItem, TelegramCustomer
-
+from django.conf import settings
 
 class TGBot(TeleBot):
 
@@ -39,9 +39,9 @@ class TGBot(TeleBot):
                 input_message_content=types.InputTextMessageContent(parse_mode="HTML",
                                                                     disable_web_page_preview=False,
                                                                     message_text=f"{product.name} - ${product.new_price}\n\n{product.characteristics} "
-                                                                                 f"<a href='http://dberehovets.pythonanywhere.com{product.main_image.url}'>&#8204</a>"
+                                                                                 f"<a href='{settings.BASE_URL}{product.main_image.url}'>&#8204</a>"
                                                                     ),
-                thumb_url=f"http://dberehovets.pythonanywhere.com{product.main_image.url}",
+                thumb_url=settings.BASE_URL + product.main_image.url,
                 reply_markup=kb
             )
             results.append(result)
@@ -94,7 +94,7 @@ class TGBot(TeleBot):
                 kb = types.InlineKeyboardMarkup()
                 button = types.InlineKeyboardButton(text=f"Delete {item.product.name} from cart", callback_data="delete_" + str(item.id))
                 kb.add(button)
-                self.send_photo(user_id, photo=f"http://dberehovets.pythonanywhere.com{item.product.main_image.url}",
+                self.send_photo(user_id, photo=f"{settings.BASE_URL}{item.product.main_image.url}",
                 caption=f"{item.product.name} - ${item.product.new_price}\nAmount in cart: {item.quantity}\n\n{item.product.characteristics[:700]}", reply_markup=kb)
 
             kb = types.InlineKeyboardMarkup()

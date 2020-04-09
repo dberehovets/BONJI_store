@@ -26,7 +26,6 @@ class UpdateBot(APIView):
         global update_id
         json_str = request.body.decode('UTF-8')
         update = types.Update.de_json(json_str)
-        bot.process_new_updates([update])
         if update_id != update.update_id:
             bot.process_new_updates([update])
             update_id = update.update_id
