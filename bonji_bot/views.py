@@ -30,7 +30,7 @@ class UpdateBot(APIView):
             bot.process_new_updates([update])
             update_id = update.update_id
 
-        return Response(b'{"ok":true,"result":[]}')
+        return Response(b'{"ok":true, }')
 
 
 ### Checking if user started conversation. Showing Keyboard.
