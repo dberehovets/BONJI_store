@@ -71,7 +71,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'BONJI_store.context_processors.category_menu',
-                'BONJI_store.context_processors.ssl_media',
+                'django.template.context_processors.media',
             ],
         },
     },
