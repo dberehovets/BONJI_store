@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView
 import random
 
 from products.models import Product
@@ -10,7 +10,13 @@ from accounts.models import Subscriber
 
 from django.contrib import messages
 
-# Create your views here.
+from rest_framework.views import APIView
+from rest_framework import generics
+from rest_framework.response import Response
+
+from products import serializers
+
+
 class ProductDetail(DetailView):
     model = Product
 
@@ -36,6 +42,7 @@ class ProductDetail(DetailView):
         context['related_products'] = related_products[:4]
         return context
 
+
 class ProductList(ListView):
     model = Product
     paginate_by = 12
@@ -55,3 +62,17 @@ class ProductList(ListView):
             Subscriber.objects.get_or_create(**form.cleaned_data)
         messages.add_message(request, messages.SUCCESS, "You are subscribed!", fail_silently=True)
         return redirect('products:product_list', category_pk=self.kwargs['category_pk'])
+
+
+class ProductApiList(APIView):
+
+    def get(self, request, category_pk, format=None):
+        category = generics.get_object_or_404(Category, pk=category_pk)
+        products = Product.objects.filter(category=category)
+        serializer = serializers.ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+
+class ProductApiDetail(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = serializers.ProductSerializer

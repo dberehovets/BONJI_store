@@ -29,4 +29,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('telebot/', include('bonji_bot.urls', namespace='bonji_bot')),
+    path('categories/', include('categories.urls', namespace='categories')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

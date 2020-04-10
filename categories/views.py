@@ -1,17 +1,14 @@
-from django.shortcuts import render, redirect
-from django.views.generic import ListView
-from django.views.generic.detail import DetailView
-
 from categories.models import Category
+from categories.serializers import CategorySerializer
 
-from accounts.forms import SubscriberForm
-from accounts.models import Subscriber
+from rest_framework import generics
 
-from django.contrib import messages
 
-# Create your views here.
-class ListCategories(ListView):
-    model = Category
+class CategoryApiList(generics.ListAPIView):
+    """
+    API endpoint that allows categories to be viewed.
+    """
+    queryset = Category.objects.all().order_by("-id")
+    serializer_class = CategorySerializer
 
-class DetailCategory(DetailView):
-    model = Category
+

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 from django.urls import reverse
 
-# Create your models here.
+
 class Product(models.Model):
     AVAILABILITY_CHOICES = [('in', 'In Stock'), ('no', 'Non-Available')]
     EXTRA_CHOICES = [
