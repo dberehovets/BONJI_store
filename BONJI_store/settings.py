@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'cart',
     'bonji_bot',
+    'corsheaders',
     'django_cleanup',
 ]
 
@@ -55,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'BONJI_store.bonji_middleware.hide_django_admin_middleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'BONJI_store.urls'
