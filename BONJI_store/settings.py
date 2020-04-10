@@ -142,4 +142,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 BASE_URL = "http://dberehovets.pythonanywhere.com"
 
-TOKEN = "1216777021:AAHf24kD4KC5BcGL5jFyycEWt1BHrzjuFUA"
+TOKEN = "1216777021:AAHf24kD4KC5BcGL5jFyycEWt1BHr******"
