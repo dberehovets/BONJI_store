@@ -1,6 +1,7 @@
 from django.contrib import admin
 from products.models import Product, ProductImage
 
+
 class ProductAdmin(admin.ModelAdmin):
 
     search_fields = ['name']
@@ -10,6 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'old_price', 'new_price', 'category', 'quantity', 'main_image']
 
     list_editable = ['quantity']
+
 
 class ProductImageAdmin(admin.ModelAdmin):
 

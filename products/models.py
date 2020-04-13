@@ -6,7 +6,6 @@ from django.urls import reverse
 
 
 class Product(models.Model):
-    AVAILABILITY_CHOICES = [('in', 'In Stock'), ('no', 'Non-Available')]
     EXTRA_CHOICES = [
         ('sale', 'Sale'),
         ('new', 'New'),

@@ -1,24 +1,23 @@
 "# BONJI_store"
 http://dberehovets.pythonanywhere.com/
 
-Інтернет-магазин електроніки.
-1. Магазин є динамічним з можливістю змінювати перелік категорій та товарів.
-2. Можливість створювати акаунти після чого в клієнта з'являється кошик та
-стає доступним замовлення товарів.
-3. Автоматична зміна кількості товарів у базі даних при замовленнях. За нестачі
-товару, клієнту показується повідомлення про неможливість додавання товару в
-кошик.
-4. Дані підписників заносяться в окрему таблицю.
-5. Імплементовано пошук за назвою товару, а також за позначками, якщо товар
-в розпродажі (sale), новий (new), гарячий (hot). Дані мітки для кожного товару
-додаються вручну.
+Online electronics store.
+1. The store is dynamic that allows to add and change new categories and products.
+2. Possibility to create accounts, login, logout that allows user to add products to the cart
+and make orders.
+3. The quantity of products in the database changes automatically. If quantity = 0, the user
+receives the message about a shortage of goods in stock.
+4. Information about the subscribers gets into a different table.
+5. Search is implemented by name, and by the product extra such as "sale", "hot", and "new". 
+The extra labels are set by the admin for each product if needed.
 
-6. Окремим пунктом даного магазину є телеграм чатбот https://t.me/BONJI_store_bot, який дозволяє:
-- переглядати товари за категоріями
-- додавати товари в кошик
-- робити замовленнях
+6. The store has its own telegram bot https://t.me/BONJI_store_bot, that allows:
+- view goods by categories
+- add products in the cart
+- make orders
 
-Телеграм бот можна знайти клікнувши на відповідну іконку-посилання поруч з
-посиланням на ЛінкедІн справа зверху, або справа внизу сторінки вебсайту.
+You can find and check the telegram bot in the link above or clicking the telegram symbol 
+in the website http://dberehovets.pythonanywhere.com/ that is located in the top rigt and bottom
+right corner of the webpage.
 
-7. Додано REST API для категорій та продуктів
+7. REST API is made for categories and products.
