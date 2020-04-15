@@ -78,7 +78,9 @@
             {% for product in product_list %}
 						<!-- Product -->
 						<div class="product">
+							<a href="{% url 'products:product_detail' pk=product.pk %}">
 							<div class="product_image"><img src="{{ product.main_image.url}}" alt="No Image"></div>
+							</a>
               {% if product.product_extra %}
 							<form id="extra_{{product.pk}}" action="{% url 'search_list' %}" method="post">
 								{% csrf_token %}
