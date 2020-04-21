@@ -611,7 +611,7 @@ section
 }
 .header_social ul li a i
 {
-	font-size: 16px;
+	font-size: 20px;
 	color: #b5b5b5;
 	padding: 5px;
 	-webkit-transition: all 200ms ease;
@@ -1469,7 +1469,7 @@ section
 }
 .footer_social ul li a i
 {
-	font-size: 17px;
+	font-size: 20px;
 	color: #1b1b1b;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;

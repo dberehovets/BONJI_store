@@ -13,7 +13,7 @@
 
 					<div class="home_slider_background" style="background-image:url({% static 'images/home_slider_1.jpg' %})"></div>
 					{% if messages %}
-					<div class="container"">
+					<div class="container">
 						<div class="row">
 							<div class="col">
 								{% for message in messages %}
@@ -168,7 +168,9 @@
 						{% for product in products %}
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="{{ product.main_image.url }}" alt="No Image"></div>
+							<a href="{% url 'products:product_detail' pk=product.pk %}">
+								<div class="product_image"><img src="{{ product.main_image.url }}" alt="No Image"></div>
+							</a>
 							{% if product.product_extra %}
 							<form id="extra_{{product.pk}}" action="{% url 'search_list' %}" method="post">
 								{% csrf_token %}

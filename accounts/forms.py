@@ -1,6 +1,7 @@
 from django import forms
 from accounts.models import Subscriber, MyUser
 
+
 class SubscriberForm(forms.ModelForm):
 
     class Meta:
@@ -14,6 +15,7 @@ class SubscriberForm(forms.ModelForm):
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+
 
 class UserCreateForm(UserCreationForm):
 
